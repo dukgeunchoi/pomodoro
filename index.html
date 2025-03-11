@@ -7,8 +7,12 @@
     <link href="styles.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
+    <header class="header">
         <h1 class="title">Pomodoro Timer</h1>
+        <img src="/imgs/orange.png" alt="Pomodoro Icon" class="header-img">
+    </header>
+
+    <div class="container">
         <p class="timer" id="timer">25:00</p>
         <div class="button-wrapper">
             <button id="start">Start</button>
@@ -16,5 +20,17 @@
             <button id="reset">Reset</button>
         </div>
     </div>
+
+    <div class="container">
+        <div class="tasks">
+            <h2>Tasks</h2>
+            <div class="row">
+                <input type="text" id="input-box" placeholder="Add tasks">
+                <button onclick="addTask()">Add</button>
+            </div>
+            <ul id="list-container"></ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
