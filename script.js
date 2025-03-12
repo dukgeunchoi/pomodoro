@@ -2,9 +2,47 @@ const startElement = document.getElementById("start")
 const stopElement = document.getElementById("stop")
 const resetElement = document.getElementById("reset")
 const timerElement = document.getElementById("timer")
+const pomodoroElement = document.getElementById("pomodoro")
+const shortBreakElement = document.getElementById("shortbreak")
+const longBreakElement = document.getElementById("longbreak")
 
-let interval
-let timeLeft = 1500;
+let interval;
+let timeLeft;
+let curr = "pomodoro";
+let prev = "";
+
+function setPomodoroTimer() {
+    clearInterval(interval)
+    timeLeft = 1500;
+    updateTimer();
+    curr = "pomodoro";
+    pomodoroElement.style.background = "#ff8c42";
+    shortBreakElement.style.background = "#fcc07a";
+    longBreakElement.style.background = "#fcc07a";
+    prev = "pomodoro";
+}
+
+function setShortBreakTimer() {
+    clearInterval(interval)
+    timeLeft = 300;
+    updateTimer();
+    curr = "shortbreak";
+    pomodoroElement.style.background = "#fcc07a";
+    shortBreakElement.style.background = "#ff8c42";
+    longBreakElement.style.background = "#fcc07a";
+    prev = "shortbreak";
+}
+
+function setLongBreakTimer() {
+    clearInterval(interval)
+    timeLeft = 900;
+    updateTimer();
+    curr = "longbreak";
+    pomodoroElement.style.background = "#fcc07a";
+    shortBreakElement.style.background = "#fcc07a";
+    longBreakElement.style.background = "#ff8c42";
+    prev = "longbreak";
+}
 
 function updateTimer() {
     let minutes = Math.floor(timeLeft / 60);
@@ -15,6 +53,7 @@ function updateTimer() {
 }
 
 function startTimer() {
+    if (prev === "start") return;
     interval = setInterval(()=> {
         if (timeLeft === 0) {
             clearInterval(interval);
@@ -26,19 +65,28 @@ function startTimer() {
         timeLeft--;
         updateTimer();
     }, 1000)
+    prev = "start";
 }
 function stopTimer() {
     clearInterval(interval);
+    prev = "stop";
 }
 function resetTimer() {
     clearInterval(interval);
-    timeLeft = 1500;
+    interval = null;
+    if (curr === "pomodoro") setPomodoroTimer();
+    if (curr === "shortbreak") setShortBreakTimer();
+    if (curr === "longbreak") setLongBreakTimer();
     updateTimer();
+    prev = "reset";
 }
 
 startElement.addEventListener("click", startTimer);
 stopElement.addEventListener("click", stopTimer);
 resetElement.addEventListener("click", resetTimer);
+pomodoroElement.addEventListener("click", setPomodoroTimer);
+shortBreakElement.addEventListener("click", setShortBreakTimer);
+longBreakElement.addEventListener("click", setLongBreakTimer);
 
 const inputBox = document.getElementById("input-box");
 const listContainter = document.getElementById("list-container");
@@ -77,4 +125,6 @@ function saveData() {
 function showTask() {
     listContainter.innerHTML = localStorage.getItem("data");
 }
+
+setPomodoroTimer();
 showTask();
