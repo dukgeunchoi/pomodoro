@@ -50,7 +50,7 @@ body {
 
 .container {
     background: white;
-    max-width: 500px;
+    max-width: 600px;
     width: 100%;
     text-align: center;
     padding: 35px;
@@ -58,6 +58,7 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     margin-bottom: 25px;
     transition: transform 0.3s ease;
+    /* background: rgba(255, 255, 255, 0.1); */
 }
 
 .timer {
@@ -76,7 +77,21 @@ body {
     margin-bottom: 10px;
 }
 
-button {
+.action-button {
+    font-size: 16px;
+    padding: 14px 24px;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-button {
     font-size: 16px;
     padding: 14px 24px;
     color: white;
@@ -272,4 +287,39 @@ ul li span:hover {
     button {
         width: 100%;
     }
+}
+
+.timer-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: nowrap;
+}
+
+.timer-type {
+    background: none;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    flex-wrap: nowrap;
+}
+
+.timer-type:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.timer-type:active {
+    transform: translateY(2px);
+}
+
+.timer-type.active {
+    background: white;
+    color: #ff7b00;
+    border: 2px solid white;
 }
