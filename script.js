@@ -6,6 +6,8 @@ const pomodoroElement = document.getElementById("pomodoro")
 const shortBreakElement = document.getElementById("shortbreak")
 const longBreakElement = document.getElementById("longbreak")
 
+const alarmSound = new Audio("audio/alarm.mp3");
+
 let interval;
 let timeLeft;
 let curr = "pomodoro";
@@ -56,10 +58,15 @@ function startTimer() {
     if (prev === "start") return;
     interval = setInterval(()=> {
         if (timeLeft === 0) {
-            clearInterval(interval);
-            alert("Times up!")
-            timeLeft = 1500;
-            updateTimer();
+            alarmSound.play();
+            
+            setTimeout(() => {
+                alert("Time's up!");
+                alarmSound.pause();
+                alarmSound.currentTime = 0;
+            }, 100); 
+
+            setTimer();
             return;
         }
         timeLeft--;
@@ -67,19 +74,24 @@ function startTimer() {
     }, 1000)
     prev = "start";
 }
+
 function stopTimer() {
     clearInterval(interval);
     prev = "stop";
 }
+
 function resetTimer() {
     clearInterval(interval);
     interval = null;
+    setTimer();
+    prev = "reset";
+}
+
+function setTimer() {
     if (curr === "pomodoro") setPomodoroTimer();
     if (curr === "shortbreak") setShortBreakTimer();
     if (curr === "longbreak") setLongBreakTimer();
-    updateTimer();
-    prev = "reset";
-}
+} 
 
 startElement.addEventListener("click", startTimer);
 stopElement.addEventListener("click", stopTimer);
