@@ -5,26 +5,40 @@ const timerElement = document.getElementById("timer")
 const pomodoroElement = document.getElementById("pomodoro")
 const shortBreakElement = document.getElementById("shortbreak")
 const longBreakElement = document.getElementById("longbreak")
-
 const alarmSound = new Audio("audio/alarm.mp3");
+const inputBox = document.getElementById("input-box");
+const listContainter = document.getElementById("list-container");
 
 let interval;
 let timeLeft;
 let curr = "pomodoro";
-let prev = "";
+
+function updateTimerStyles(activeMode) {
+    const timerButtons = [pomodoroElement, shortBreakElement, longBreakElement];
+    
+    timerButtons.forEach(button => {
+        button.style.background = "transparent";
+        button.style.color = "white";
+    });
+
+    if (activeMode === "pomodoro") {
+        pomodoroElement.style.background = "white";
+        pomodoroElement.style.color = "black";
+    } else if (activeMode === "shortbreak") {
+        shortBreakElement.style.background = "white";
+        shortBreakElement.style.color = "black";
+    } else if (activeMode === "longbreak") {
+        longBreakElement.style.background = "white";
+        longBreakElement.style.color = "black";
+    }
+}
 
 function setPomodoroTimer() {
     clearInterval(interval)
     timeLeft = 1500;
     updateTimer();
     curr = "pomodoro";
-    pomodoroElement.style.background = "white";
-    pomodoroElement.style.color = "black";
-    shortBreakElement.style.background = "transparent";
-    shortBreakElement.style.color = "white";
-    longBreakElement.style.background = "transparent";
-    longBreakElement.style.color = "white";
-    prev = "pomodoro";
+    updateTimerStyles(curr);
 }
 
 function setShortBreakTimer() {
@@ -32,13 +46,7 @@ function setShortBreakTimer() {
     timeLeft = 300;
     updateTimer();
     curr = "shortbreak";
-    pomodoroElement.style.background = "transparent";
-    pomodoroElement.style.color = "white";
-    shortBreakElement.style.background = "white";
-    shortBreakElement.style.color = "black";
-    longBreakElement.style.background = "transparent";
-    longBreakElement.style.color = "white";
-    prev = "shortbreak";
+    updateTimerStyles(curr);
 }
 
 function setLongBreakTimer() {
@@ -46,14 +54,14 @@ function setLongBreakTimer() {
     timeLeft = 900;
     updateTimer();
     curr = "longbreak";
-    pomodoroElement.style.background = "transparent";
-    pomodoroElement.style.color = "white";
-    shortBreakElement.style.background = "transparent";
-    shortBreakElement.style.color = "white";
-    longBreakElement.style.background = "white";
-    longBreakElement.style.color = "black";
-    prev = "longbreak";
+    updateTimerStyles(curr);
 }
+
+function setTimer() {
+    if (curr === "pomodoro") setPomodoroTimer();
+    if (curr === "shortbreak") setShortBreakTimer();
+    if (curr === "longbreak") setLongBreakTimer();
+} 
 
 function updateTimer() {
     let minutes = Math.floor(timeLeft / 60);
@@ -64,7 +72,7 @@ function updateTimer() {
 }
 
 function startTimer() {
-    if (prev === "start") return;
+    if (curr === "start") return;
     interval = setInterval(()=> {
         if (timeLeft === 0) {
             alarmSound.play();
@@ -81,26 +89,20 @@ function startTimer() {
         timeLeft--;
         updateTimer();
     }, 1000)
-    prev = "start";
+    curr = "start";
 }
 
 function stopTimer() {
     clearInterval(interval);
-    prev = "stop";
+    curr = "stop";
 }
 
 function resetTimer() {
     clearInterval(interval);
     interval = null;
     setTimer();
-    prev = "reset";
+    curr = "reset";
 }
-
-function setTimer() {
-    if (curr === "pomodoro") setPomodoroTimer();
-    if (curr === "shortbreak") setShortBreakTimer();
-    if (curr === "longbreak") setLongBreakTimer();
-} 
 
 startElement.addEventListener("click", startTimer);
 stopElement.addEventListener("click", stopTimer);
@@ -108,9 +110,6 @@ resetElement.addEventListener("click", resetTimer);
 pomodoroElement.addEventListener("click", setPomodoroTimer);
 shortBreakElement.addEventListener("click", setShortBreakTimer);
 longBreakElement.addEventListener("click", setLongBreakTimer);
-
-const inputBox = document.getElementById("input-box");
-const listContainter = document.getElementById("list-container");
 
 function addTask() {
     if (inputBox.value === '') {
