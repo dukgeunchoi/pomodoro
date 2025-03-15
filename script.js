@@ -18,9 +18,12 @@ function setPomodoroTimer() {
     timeLeft = 1500;
     updateTimer();
     curr = "pomodoro";
-    pomodoroElement.style.background = "#ff8c42";
-    shortBreakElement.style.background = "#fcc07a";
-    longBreakElement.style.background = "#fcc07a";
+    pomodoroElement.style.background = "white";
+    pomodoroElement.style.color = "black";
+    shortBreakElement.style.background = "transparent";
+    shortBreakElement.style.color = "white";
+    longBreakElement.style.background = "transparent";
+    longBreakElement.style.color = "white";
     prev = "pomodoro";
 }
 
@@ -29,9 +32,12 @@ function setShortBreakTimer() {
     timeLeft = 300;
     updateTimer();
     curr = "shortbreak";
-    pomodoroElement.style.background = "#fcc07a";
-    shortBreakElement.style.background = "#ff8c42";
-    longBreakElement.style.background = "#fcc07a";
+    pomodoroElement.style.background = "transparent";
+    pomodoroElement.style.color = "white";
+    shortBreakElement.style.background = "white";
+    shortBreakElement.style.color = "black";
+    longBreakElement.style.background = "transparent";
+    longBreakElement.style.color = "white";
     prev = "shortbreak";
 }
 
@@ -40,9 +46,12 @@ function setLongBreakTimer() {
     timeLeft = 900;
     updateTimer();
     curr = "longbreak";
-    pomodoroElement.style.background = "#fcc07a";
-    shortBreakElement.style.background = "#fcc07a";
-    longBreakElement.style.background = "#ff8c42";
+    pomodoroElement.style.background = "transparent";
+    pomodoroElement.style.color = "white";
+    shortBreakElement.style.background = "transparent";
+    shortBreakElement.style.color = "white";
+    longBreakElement.style.background = "white";
+    longBreakElement.style.color = "black";
     prev = "longbreak";
 }
 
