@@ -12,6 +12,7 @@ const listContainter = document.getElementById("list-container");
 let interval;
 let timeLeft;
 let curr = "pomodoro";
+let prev;
 
 function updateTimerStyles(activeMode) {
     const timerButtons = [pomodoroElement, shortBreakElement, longBreakElement];
@@ -39,6 +40,7 @@ function setPomodoroTimer() {
     updateTimer();
     curr = "pomodoro";
     updateTimerStyles(curr);
+    prev = "pomodoro";
 }
 
 function setShortBreakTimer() {
@@ -47,6 +49,7 @@ function setShortBreakTimer() {
     updateTimer();
     curr = "shortbreak";
     updateTimerStyles(curr);
+    prev = "shortbreak";
 }
 
 function setLongBreakTimer() {
@@ -55,6 +58,7 @@ function setLongBreakTimer() {
     updateTimer();
     curr = "longbreak";
     updateTimerStyles(curr);
+    prev = "longbreak";
 }
 
 function setTimer() {
@@ -72,7 +76,7 @@ function updateTimer() {
 }
 
 function startTimer() {
-    if (curr === "start") return;
+    if (prev === "start") return;
     interval = setInterval(()=> {
         if (timeLeft === 0) {
             alarmSound.play();
@@ -89,19 +93,19 @@ function startTimer() {
         timeLeft--;
         updateTimer();
     }, 1000)
-    curr = "start";
+    prev = "start";
 }
 
 function stopTimer() {
     clearInterval(interval);
-    curr = "stop";
+    prev = "stop";
 }
 
 function resetTimer() {
     clearInterval(interval);
     interval = null;
     setTimer();
-    curr = "reset";
+    prev = "reset";
 }
 
 startElement.addEventListener("click", startTimer);
